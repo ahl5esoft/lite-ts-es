@@ -22,20 +22,11 @@ export class ElasticSearchDbQuery<T> implements IDbQuery<T> {
         v.orderByDesc ??= [];
 
         const sorts = [];
-        for (const r of v.order) {
-            sorts.push({
-                [r]: {
-                    order: 'asc'
-                }
-            });
-        }
-        for (const r of v.orderByDesc) {
-            sorts.push({
-                [r]: {
-                    order: 'desc'
-                }
-            });
-        }
+        for (const r of v.order)
+            sorts.push([r, 'asc']);
+        for (const r of v.orderByDesc)
+            sorts.push([r, 'desc']);
+
         const res = await this.m_Pool.client.search({
             from: v.skip || 0,
             index: await this.m_Pool.getIndex(this.m_Model),
