@@ -14,9 +14,7 @@ export class ElasticSearchPool {
      * es客户端
      */
     public get client() {
-        if (!this.m_Client)
-            this.m_Client = new Client(this.m_Cfg);
-
+        this.m_Client ??= new Client(this.m_Cfg);
         return this.m_Client;
     }
 
