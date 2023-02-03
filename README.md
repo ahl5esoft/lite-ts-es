@@ -1,6 +1,4 @@
-# ElasticSearch DbFactory
-
-![Version](https://img.shields.io/badge/version-7.0.0-green.svg)
+![Version](https://img.shields.io/badge/version-7.1.1-green.svg)
 
 v7.x 分支支持 elasticsearch 7.10.0 版本
 
