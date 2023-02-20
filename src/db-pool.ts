@@ -3,7 +3,7 @@ import { Client, ClientOptions } from '@elastic/elasticsearch';
 /**
  * es元数据管理
  */
-export class ElasticSearchPool {
+export class DbPool {
     /**
      * 索引
      */

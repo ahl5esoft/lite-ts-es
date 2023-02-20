@@ -1,10 +1,10 @@
-import { IDbQueryOption } from './i-db-query-option';
-import { IDbQuery } from './i-db-query';
-import { ElasticSearchPool } from './pool';
+import { IDbQuery, IDbQueryOption } from 'lite-ts-db';
 
-export class ElasticSearchDbQuery<T> implements IDbQuery<T> {
+import { DbPool } from './db-pool';
+
+export class DbQuery<T> implements IDbQuery<T> {
     public constructor(
-        private m_Pool: ElasticSearchPool,
+        private m_Pool: DbPool,
         private m_Model: new () => T
     ) { }
 

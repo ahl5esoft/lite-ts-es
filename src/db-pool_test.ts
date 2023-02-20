@@ -1,7 +1,7 @@
 import { ClientOptions } from '@elastic/elasticsearch';
 import { strictEqual } from 'assert';
 
-import { ElasticSearchPool as Self } from './pool';
+import { DbPool as Self } from './db-pool';
 
 const cfg: ClientOptions = {
     node: 'http://localhost:9200',

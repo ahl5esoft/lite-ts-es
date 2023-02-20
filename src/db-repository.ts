@@ -1,15 +1,16 @@
-import { ElasticSearchDbQuery } from './db-query';
-import { IDbFactory } from './i-db-factory';
-import { IDbRepository } from './i-db-repository';
-import { ElasticSearchPool } from './pool';
-import { ElasticSearchUnitOfWork } from './unit-of-work';
+import { IDbRepository } from 'lite-ts-db';
+
+import { ElasticSearchDbFactory } from './db-factory';
+import { DbQuery } from './db-query';
+import { DbPool } from './db-pool';
+import { UnitOfWork } from './unit-of-work';
 
 type regiterAction = (model: Function, entry: any) => void;
 
 /**
  * es数据仓库
  */
-export class ElasticSearchDbRepository<T> implements IDbRepository<T> {
+export class DbRepository<T> implements IDbRepository<T> {
     /**
      * 是否有事务
      */
@@ -20,7 +21,7 @@ export class ElasticSearchDbRepository<T> implements IDbRepository<T> {
      */
     protected get uow() {
         if (!this.m_Uow) {
-            this.m_Uow = this.m_DbFactory.uow() as ElasticSearchUnitOfWork;
+            this.m_Uow = this.m_DbFactory.uow();
             this.m_IsTx = false;
         }
 
@@ -36,10 +37,10 @@ export class ElasticSearchDbRepository<T> implements IDbRepository<T> {
      * @param model 模型
      */
     public constructor(
-        private m_DbFactory: IDbFactory,
+        private m_DbFactory: ElasticSearchDbFactory,
         private m_Model: new () => T,
-        private m_Pool: ElasticSearchPool,
-        private m_Uow: ElasticSearchUnitOfWork,
+        private m_Pool: DbPool,
+        private m_Uow: UnitOfWork,
     ) { }
 
     /**
@@ -73,7 +74,7 @@ export class ElasticSearchDbRepository<T> implements IDbRepository<T> {
      * 创建查询对象
      */
     public query() {
-        return new ElasticSearchDbQuery(this.m_Pool, this.m_Model);
+        return new DbQuery(this.m_Pool, this.m_Model);
     }
 
     /**

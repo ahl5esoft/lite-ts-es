@@ -2,8 +2,8 @@ import { Client } from '@elastic/elasticsearch';
 import { deepStrictEqual } from 'assert';
 import { Mock, mockAny } from 'lite-ts-mock';
 
-import { ElasticSearchPool } from './pool';
-import { ElasticSearchUnitOfWork as Self } from './unit-of-work';
+import { DbPool } from './db-pool';
+import { UnitOfWork as Self } from './unit-of-work';
 
 class TestModel {
     public id: string;
@@ -73,7 +73,7 @@ describe('src/unit-of-work.ts', () => {
                 null
             );
 
-            const elasticSearchPoolMock = new Mock<ElasticSearchPool>({
+            const elasticSearchPoolMock = new Mock<DbPool>({
                 get client() {
                     return clientMock.actual;
                 }

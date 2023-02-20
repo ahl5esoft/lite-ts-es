@@ -1,18 +1,18 @@
 import { ClientOptions } from '@elastic/elasticsearch';
+import { DbFactoryBase } from 'lite-ts-db';
 
-import { IDbFactory } from './i-db-factory';
-import { ElasticSearchDbRepository } from './db-repository';
-import { ElasticSearchPool } from './pool';
-import { ElasticSearchUnitOfWork } from './unit-of-work';
+import { DbRepository } from './db-repository';
+import { DbPool } from './db-pool';
+import { UnitOfWork } from './unit-of-work';
 
 /**
  * es数据库工厂
  */
-export class ElasticSearchDbFactory implements IDbFactory {
+export class ElasticSearchDbFactory extends DbFactoryBase {
     /**
      * es池
      */
-    private m_Pool: ElasticSearchPool;
+    private m_Pool: DbPool;
 
     /**
      * 构造函数
@@ -24,7 +24,9 @@ export class ElasticSearchDbFactory implements IDbFactory {
         cfg: ClientOptions,
         project: string,
     ) {
-        this.m_Pool = new ElasticSearchPool(cfg, project);
+        super();
+
+        this.m_Pool = new DbPool(cfg, project);
     }
 
     /**
@@ -33,14 +35,14 @@ export class ElasticSearchDbFactory implements IDbFactory {
      * @param model 模型
      * @param uow 工作单元
      */
-    public db<T>(model: new () => T, uow?: ElasticSearchUnitOfWork) {
-        return new ElasticSearchDbRepository(this, model, this.m_Pool, uow);
+    public db<T>(model: new () => T, uow?: UnitOfWork) {
+        return new DbRepository(this, model, this.m_Pool, uow);
     }
 
     /**
      * 创建工作单元
      */
     public uow() {
-        return new ElasticSearchUnitOfWork(this.m_Pool);
+        return new UnitOfWork(this.m_Pool);
     }
 }

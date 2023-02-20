@@ -2,8 +2,8 @@ import { Client } from '@elastic/elasticsearch';
 import { deepStrictEqual, strictEqual } from 'assert';
 import { Mock, mockAny } from 'lite-ts-mock';
 
-import { ElasticSearchDbQuery as Self } from './db-query';
-import { ElasticSearchPool } from './pool';
+import { DbPool } from './db-pool';
+import { DbQuery as Self } from './db-query';
 
 class TestModel {
     public id: string;
@@ -14,7 +14,7 @@ describe('src/db-query.ts', () => {
     describe('.count(where?: any)', () => {
         it('ok', async () => {
             const clientMock = new Mock<Client>();
-            const elasticSearchPoolMock = new Mock<ElasticSearchPool>({
+            const elasticSearchPoolMock = new Mock<DbPool>({
                 get client() {
                     return clientMock.actual;
                 }
@@ -44,7 +44,7 @@ describe('src/db-query.ts', () => {
     describe('.toArray(v?: Partial<IDbQueryOption<any>>)', () => {
         it('ok', async () => {
             const clientMock = new Mock<Client>();
-            const elasticSearchPoolMock = new Mock<ElasticSearchPool>({
+            const elasticSearchPoolMock = new Mock<DbPool>({
                 get client() {
                     return clientMock.actual;
                 }

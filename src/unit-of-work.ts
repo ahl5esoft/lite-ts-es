@@ -1,5 +1,6 @@
-import { IUnitOfWork } from './i-unit-of-work';
-import { ElasticSearchPool } from './pool';
+import { IUnitOfWork } from 'lite-ts-db';
+
+import { DbPool } from './db-pool';
 
 /**
  * 操作项
@@ -22,7 +23,7 @@ interface IOperationItem {
 /**
  * es工作单元
  */
-export class ElasticSearchUnitOfWork implements IUnitOfWork {
+export class UnitOfWork implements IUnitOfWork {
     /**
      * 提交后函数
      */
@@ -39,7 +40,7 @@ export class ElasticSearchUnitOfWork implements IUnitOfWork {
      * @param m_Pool 池
      */
     public constructor(
-        private m_Pool: ElasticSearchPool
+        private m_Pool: DbPool
     ) { }
 
     /**
