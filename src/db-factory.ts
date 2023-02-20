@@ -34,7 +34,7 @@ export class ElasticSearchDbFactory implements IDbFactory {
      * @param uow 工作单元
      */
     public db<T>(model: new () => T, uow?: ElasticSearchUnitOfWork) {
-        return new ElasticSearchDbRepository(this.m_Pool, this, uow, model);
+        return new ElasticSearchDbRepository(this, model, this.m_Pool, uow);
     }
 
     /**

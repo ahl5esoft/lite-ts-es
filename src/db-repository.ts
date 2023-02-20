@@ -36,10 +36,10 @@ export class ElasticSearchDbRepository<T> implements IDbRepository<T> {
      * @param model 模型
      */
     public constructor(
-        private m_Pool: ElasticSearchPool,
         private m_DbFactory: IDbFactory,
+        private m_Model: new () => T,
+        private m_Pool: ElasticSearchPool,
         private m_Uow: ElasticSearchUnitOfWork,
-        private m_Model: new () => T
     ) { }
 
     /**
