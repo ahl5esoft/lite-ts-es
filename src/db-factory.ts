@@ -1,6 +1,6 @@
 import { ClientOptions } from '@elastic/elasticsearch';
 
-import { DbFactoryBase } from './db-factory-base';
+import { IDbFactory } from './i-db-factory';
 import { ElasticSearchDbRepository } from './db-repository';
 import { ElasticSearchPool } from './pool';
 import { ElasticSearchUnitOfWork } from './unit-of-work';
@@ -8,7 +8,7 @@ import { ElasticSearchUnitOfWork } from './unit-of-work';
 /**
  * es数据库工厂
  */
-export class ElasticSearchDbFactory extends DbFactoryBase {
+export class ElasticSearchDbFactory implements IDbFactory {
     /**
      * es池
      */
@@ -24,8 +24,6 @@ export class ElasticSearchDbFactory extends DbFactoryBase {
         cfg: ClientOptions,
         project: string,
     ) {
-        super();
-
         this.m_Pool = new ElasticSearchPool(cfg, project);
     }
 
@@ -36,7 +34,7 @@ export class ElasticSearchDbFactory extends DbFactoryBase {
      * @param uow 工作单元
      */
     public db<T>(model: new () => T, uow?: ElasticSearchUnitOfWork) {
-        return new ElasticSearchDbRepository(this.m_Pool, this, uow, model);
+        return new ElasticSearchDbRepository(this, model, this.m_Pool, uow);
     }
 
     /**
